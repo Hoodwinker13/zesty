@@ -14,12 +14,12 @@ export default async function handler(
     const contract = new ethers.Contract(__________, __________, __________);
 
     let allKudos: Kudo[] = [];
-    const totalAuthors = await contract.__________;
+    const totalAuthors = await contract.totalAuthors();
 
     // Loads all authors and their total citations
     for (let i = 0; i < totalAuthors; i++) {
-      const author = await contract.__________;
-      const authorKudos = await contract.__________;
+      const author = await contract.authors(i);
+      const authorKudos = await contract.authorToKudos(author);
       console.log(author, authorKudos.toNumber());
       allKudos.push({
         author: author,

@@ -21,7 +21,7 @@ ao3_domain = "https://archiveofourown.org"
 # openai.api_key = os.getenv("OPENAI_API_KEY") #uncomment whe we start using open ai
 
 # NUM_TRAINING_FANFIC = 10 #can change for testing! 
-JSON_PATH = "put path of json here" #TODO: week 2 this is just a good global var to have, please use it 
+JSON_PATH = "C:/Users/mjune/bearchainAI/web/json" #TODO: week 2 this is just a good global var to have, please use it 
 
 #a potential helper function for you to use -- also an exmaple of how to open and load jsons! 
 # given a fandom <string>, it returns a link <string> for that fandom's fanfics
@@ -40,7 +40,7 @@ def is_language(fanfic, language):
     return 
 
 #TODO: WEEK 2 Deliberable finish this function ! I have some very loose guide lines for you, feel free to follow them or start from scratch! 
-# returns an array of two eleents: 1) an array of all the authors whose fanfiction we scraped; 2. specified {number} fanfics (or all fanfic availiable if the total fanfic is less than the number) of word range {min_length}to {max_length}
+# returns an array of two elements: 1) an array of all the authors whose fanfiction we scraped; 2. specified {number} fanfics (or all fanfic availiable if the total fanfic is less than the number) of word range {min_length}to {max_length}
 # in {language} from the given {fandom} in an array of dicts where the dicts are the formatted fanfic traning data 
 #hint: how can we use ao3's preexisting filtering system to help us out, and get us some of the fanfic that we want! 
 def get_fanfic_info(fandom, number, language, min_length, max_length):
@@ -48,9 +48,8 @@ def get_fanfic_info(fandom, number, language, min_length, max_length):
     fanfics = []
     authors = []
 
-    sort_by = f"maybe some filtering..."  
+    sort_by = f"Kudos"  
     link = get_link(fandom) + sort_by
-
     while counter < number and link != "":
         html = requests.get(link)
         soup = BeautifulSoup(html.text, "lxml")
@@ -67,7 +66,18 @@ def get_fanfic_info(fandom, number, language, min_length, max_length):
                 # check valid author and fanfic/is a fanfic you want to add 
                 # more formatting? getting data you want? 
                 # formatting training data
-                
+        fanfic = soup.find_all(
+            'h4', class_ = "heading"
+        )
+        for i in fanfic:
+            temp = i.find(
+                'a'
+            )
+            link = temp.get_text
+            print(link)
+            arr_str = link.split("by")
+            
+            
         next_page = "get next potential page here"
         if next_page != None:
             link = "link for next page"
